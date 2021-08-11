@@ -1,0 +1,9 @@
+mainmenu "Main MenuConfig Demo"
+comment "This is a comment demo"
+config BSP_USING_GPIO
+    bool "Enable GPIO"
+    default y
+    help
+    config gpio
+
+source "components/Kconfig"

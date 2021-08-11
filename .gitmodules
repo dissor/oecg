@@ -1,0 +1,6 @@
+[submodule "tools/Kconfiglib"]
+	path = tools/Kconfiglib
+	url = https://github.com/ulfalizer/Kconfiglib
+[submodule "components/at_device"]
+	path = components/at_device
+	url = https://github.com/RT-Thread-packages/at_device

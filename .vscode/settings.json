@@ -1,0 +1,26 @@
+{
+    "files.associations": {
+        "types.h": "c",
+        "posix_types.h": "c",
+        "int-ll64.h": "c",
+        "stdint.h": "c",
+        "disp_spi.h": "c",
+        "spidev.h": "c",
+        "fcntl.h": "c",
+        "getopt.h": "c",
+        "ili9488.h": "c",
+        "vector": "cpp",
+        "*.tcc": "cpp",
+        "functional": "cpp",
+        "random": "cpp",
+        "iostream": "cpp",
+        "lvgl.h": "c",
+        "lv_port_disp_template.h": "c",
+        "lv_port_fs.h": "c",
+        "lv_port_indev_template.h": "c",
+        "lv_port_disp.h": "c",
+        "lv_hal.h": "c",
+        "lv_hal_disp.h": "c",
+        "ostream": "cpp"
+    }
+}
