@@ -25,4 +25,7 @@
 [submodule "components/nanopb"]
 	path = components/nanopb
 	url = https://github.com/nanopb/nanopb
+[submodule "components/mbedtls"]
+	path = components/mbedtls
+	url = https://github.com/ARMmbed/mbedtls
 
