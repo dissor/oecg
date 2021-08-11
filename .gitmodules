@@ -4,3 +4,25 @@
 [submodule "components/at_device"]
 	path = components/at_device
 	url = https://github.com/RT-Thread-packages/at_device
+[submodule "components/cJSON"]
+	path = components/cJSON
+	url = https://github.com/DaveGamble/cJSON
+[submodule "components/gui/lvgl"]
+	path = components/gui/lvgl
+	url = https://github.com/lvgl/lvgl
+[submodule "components/curl"]
+	path = components/curl
+	url = https://github.com/curl/curl
+[submodule "components/mqttclient"]
+	path = components/mqttclient
+	url = https://github.com/jiejieTop/mqttclient
+[submodule "components/micropython"]
+	path = components/micropython
+	url = https://github.com/micropython/micropython
+[submodule "components/lua"]
+	path = components/lua
+	url = https://github.com/lua/lua
+[submodule "components/nanopb"]
+	path = components/nanopb
+	url = https://github.com/nanopb/nanopb
+
