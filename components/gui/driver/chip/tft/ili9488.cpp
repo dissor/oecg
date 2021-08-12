@@ -40,7 +40,7 @@ static void ili9488_set_orientation(uint8_t orientation);
 
 static void ili9488_send_cmd(uint8_t cmd);
 static void ili9488_send_data(void *data, uint16_t length);
-static void ili9488_send_color(void *data, uint16_t length);
+static void ili9488_send_color(void *data, uint32_t length);
 
 /**********************
  *  STATIC VARIABLES
@@ -129,6 +129,8 @@ void ili9488_flush(lv_disp_drv_t *drv, const lv_area_t *area, lv_color_t *color_
 {
 	uint32_t size = lv_area_get_width(area) * lv_area_get_height(area);
 
+	cout << "ili9488_flush size: "<<size<<endl;
+
 	lv_color16_t *buffer_16bit = (lv_color16_t *)color_map;
 	uint8_t *mybuf;
 	do
@@ -179,8 +181,58 @@ void ili9488_flush(lv_disp_drv_t *drv, const lv_area_t *area, lv_color_t *color_
 	/*Memory write*/
 	ili9488_send_cmd(ILI9488_CMD_MEMORY_WRITE);
 
+	cout << "ili9488_send_color" << endl;
 	ili9488_send_color((void *)mybuf, size * 3);
 	free(mybuf);
+}
+
+void test_set_px(uint16_t x1, uint16_t x2, uint16_t y1, uint16_t y2, uint16_t color){
+	/* Column addresses  */
+	uint8_t xb[] = {
+		(uint8_t)(x1 >> 8) & 0xFF,
+		(uint8_t)(x1) & 0xFF,
+		(uint8_t)(x2 >> 8) & 0xFF,
+		(uint8_t)(x2) & 0xFF,
+	};
+
+	/* Page addresses  */
+	uint8_t yb[] = {
+		(uint8_t)(y1 >> 8) & 0xFF,
+		(uint8_t)(y1) & 0xFF,
+		(uint8_t)(y2 >> 8) & 0xFF,
+		(uint8_t)(y2) & 0xFF,
+	};
+
+	/*Column addresses*/
+	ili9488_send_cmd(ILI9488_CMD_COLUMN_ADDRESS_SET);
+	ili9488_send_data(xb, 4);
+
+	/*Page addresses*/
+	ili9488_send_cmd(ILI9488_CMD_PAGE_ADDRESS_SET);
+	ili9488_send_data(yb, 4);
+
+	/*Memory write*/
+	ili9488_send_cmd(ILI9488_CMD_MEMORY_WRITE);
+
+	uint8_t mybuf[3] = {0};
+	int j = 0;
+	uint32_t size = (x2-x1)*(y2-y1);
+	cout << "size: " << size << endl;
+
+	for (uint32_t i = 0; i < size; i++)
+	{
+		mybuf[j] = (uint8_t)(((color & 0xF800) >> 8) | ((color & 0x8000) >> 13));
+		j++;
+		mybuf[j] = (uint8_t)((color & 0x07E0) >> 3);
+		j++;
+		mybuf[j] = (uint8_t)(((color & 0x001F) << 3) | ((color & 0x0010) >> 2));
+		j++;
+	}
+
+	for(int i=0; i<size; i++){
+		ili9488_send_color((void *)mybuf, 3);
+	}
+	
 }
 
 void ili9488_enable_backlight(bool backlight)
@@ -227,7 +279,7 @@ static void ili9488_send_data(void *data, uint16_t length)
 	disp_spi_send_data((uint8_t *)data, length);
 }
 
-static void ili9488_send_color(void *data, uint16_t length)
+static void ili9488_send_color(void *data, uint32_t length)
 {
 	disp_wait_for_pending_transactions();
 	gpio_set_level(ILI9488_DC, 1); /*Data mode*/

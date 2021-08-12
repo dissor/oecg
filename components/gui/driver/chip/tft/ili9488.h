@@ -43,7 +43,7 @@ extern "C" {
 #endif
 
 #ifndef CONFIG_LV_DISPLAY_ORIENTATION
-#define CONFIG_LV_DISPLAY_ORIENTATION 0
+#define CONFIG_LV_DISPLAY_ORIENTATION 2
 #endif
 
 /*******************
@@ -164,7 +164,7 @@ typedef struct {
 void ili9488_init(void);
 void ili9488_flush(lv_disp_drv_t * drv, const lv_area_t * area, lv_color_t * color_map);
 void ili9488_enable_backlight(bool backlight);
-
+void test_set_px(uint16_t x1, uint16_t x2, uint16_t y1, uint16_t y2, uint16_t color);
 /**********************
  *      MACROS
  **********************/

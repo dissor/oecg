@@ -154,10 +154,29 @@ void disp_spi_send_data(uint8_t *data, size_t length)
     disp_spi_transaction(data, length);
 }
 
+#define SENN (4096)
 void disp_spi_send_colors(uint8_t *data, size_t length)
 {
     //todo: add queue 2
-    disp_spi_transaction(data, length);
+    int rem = length % SENN;
+    int quo = length / SENN;
+    printf("rem: %d, quo: %d\n",rem, quo);
+    if(quo > 0) {
+        for (int i = 0; i < quo; i++)
+        {
+            disp_spi_transaction(data + SENN*i, SENN);
+        }
+
+        if(rem > 0)
+        {
+            disp_spi_transaction(data + SENN*quo, rem);
+        }
+        
+    }
+    else {
+        disp_spi_transaction(data, length);
+    }
+    
 }
 /**********************
  *   STATIC FUNCTIONS
